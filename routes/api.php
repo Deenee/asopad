@@ -17,7 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix'=>'register'], function(){
-	Route::post('/researcher', 'AuthController@registerResearcher');
-	Route::post('/reviewer', 'AuthController@registerReviewer');
+Route::group(['prefix'=>'v1'], function(){
+	Route::group(['prefix'=>'register'], function(){
+		Route::post('/{user_type}', 'AuthController@register');
+		// Route::post('/reviewer', 'AuthController@registerReviewer');
+	});
 });
