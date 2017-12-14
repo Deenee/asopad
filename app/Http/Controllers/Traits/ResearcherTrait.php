@@ -1,10 +1,20 @@
 <?php
 
 namespace App\Http\Controllers\Traits;
+use App\Http\Controllers\ValidateRequests\ValidateResearcherRequest;
+use App\User;
+use Log;
 
-trait RegisterResearcher{
-	public function register()
+trait ResearcherTrait{
+	public static function registerResearcher()
 	{
+		Log::info('Register researcher');
+
+		$validator = new ValidateResearcherRequest;
+		$validator = $validator->validate();
+        if($validator && $validator->getData()->responseCode == '400'){
+            return $validator;
+        }
 		try{
          $user = User::create([
             'first_name' => request()->first_name,
@@ -16,7 +26,7 @@ trait RegisterResearcher{
             'type' => 'researcher',
             // 'orcid' => request()->orcid,
             ]);
-        }catch(\Exception $e){
+        }catch(\Excetion $e){
             Log::critical('Error registering researcher!', ['Error'=> $e->getMessage(),'Request' => request()]);
             return response()->json([
                 'responseMessage'=>'Registration failed.',

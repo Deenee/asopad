@@ -16,7 +16,7 @@ class ValidateResearcherRequest
             'email' =>'required|unique:users|email',
             'password'  => 'required|confirmed',
             'password_confirmation' => 'required',
-            'phone_number'=> 'required|unique:users|phone_number'
+            'phone_number'=> 'required|unique:users'
            ];
 
 	public function validate()
