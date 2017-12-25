@@ -17,20 +17,13 @@ class AuthController extends Controller
 */
     public function register()
     {
+        //place traits in user model later .
         if(request()->user_type == 'reviewer'){
-            return ReviewerTrait::register();
+            return ReviewerTrait::registerReviewer();
         }
         if (request()->user_type == 'researcher') {
             return ResearcherTrait::registerResearcher();
         }
     }
-    public function registerReviewer()
-    {
-        return $this->register();
-    }
-
-    public function registerResearcher(Request $request)
-    {    
-        
-    }
+  
 }

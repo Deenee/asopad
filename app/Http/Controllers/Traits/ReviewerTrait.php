@@ -7,7 +7,7 @@ use App\User;
 
 
 trait ReviewerTrait{
-	public static function register()
+	public static function registerReviewer()
 	{
 		$validator = new ValidateReviewerRequest;
 		$validator = $validator->validate();
@@ -26,7 +26,7 @@ trait ReviewerTrait{
             'institution_id' => request()->institution_id,
             'department_id'=>request()->department_id,
             ]);
-        return response()->json(['responseMessage'=> 'Registration Successful.', 'responseCode'=> '201', 'data'=>[]
+        return response()->json(['responseMessage'=> 'Registration Successful.', 'responseCode'=> '201', 'data'=>[$user]
         	],200);
 	}
 }

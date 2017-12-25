@@ -3,12 +3,14 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Http\Controllers\Traits\ReviewerTrait;
+use App\Http\Controllers\Traits\ResearcherTrait;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use ReviewerTrait, ResearcherTrait, HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.

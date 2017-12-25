@@ -8,7 +8,7 @@ use Log;
 trait ResearcherTrait{
 	public static function registerResearcher()
 	{
-		Log::info('Register researcher');
+		Log::info('Register researcher attempt ..');
 
 		$validator = new ValidateResearcherRequest;
 		$validator = $validator->validate();
@@ -26,7 +26,7 @@ trait ResearcherTrait{
             'type' => 'researcher',
             // 'orcid' => request()->orcid,
             ]);
-        }catch(\Excetion $e){
+        }catch(\Exception $e){
             Log::critical('Error registering researcher!', ['Error'=> $e->getMessage(),'Request' => request()]);
             return response()->json([
                 'responseMessage'=>'Registration failed.',
@@ -36,8 +36,17 @@ trait ResearcherTrait{
         }
          return response()->json([
                 'responseMessage'=>'Registration Successful.',
-                'responseCode'=>'200',
-                'data'=>$user
+                'responseCode'=>'201',
+                'data'=>[$user]
                 ],200);
-	}
+    }
+    
+    public function login()
+    {
+        Log::info('Researcher Login Attempt..');
+        $credentials = request()->only(['email', 'password']);
+        $user = User::where('email' == $credentials['email'])->first();
+        if(Hash::check('password', $credentials['password']));
+        
+    }
 }
