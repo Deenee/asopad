@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password')->nullable();
             $table->string('phone_number')->nullable();
+            $table->string('email_token')->nullable();
+            $table->enum('email_status', ['unverified', 'verified']);
             $table->string('field_of_study')->nullable();
             $table->integer('institution_id')->nullable();
             $table->integer('department_id')->nullable();

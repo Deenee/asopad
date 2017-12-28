@@ -19,7 +19,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix'=>'v1'], function(){
 	Route::group(['prefix'=>'register'], function(){
-		Route::post('/{user_type}', 'AuthController@register');
-		// Route::post('/reviewer', 'AuthController@registerReviewer');
+		// Route::post('/{user_type}', 'AuthController@register');
+	Route::post('/', 'AuthController@simpleRegistration');
+	});
+	
+	Route::get('user', 'AuthController@user');
+
+	Route::group(['prefix' => 'email/verification'], function () {
+	Route::post('send', 'EmailController@resendVerificationEmail');
+	Route::post('confirm', 'EmailController@verifyEmail');	
 	});
 });
