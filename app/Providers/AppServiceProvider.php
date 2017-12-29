@@ -17,13 +17,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Log::info('App Accessed');
+        
         $monolog = Log::getMonolog();
         if (!\App::environment('local')) {
             $slackHandler = new SlackWebhookHandler('https://hooks.slack.com/services/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', '#paddylogs', 'Paddy Logs', false, 'warning', true, true, Logger::API);
         } else {
             $slackHandler = new SlackWebhookHandler('https://hooks.slack.com/services/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', '#paddylogs', 'Paddy Logs', false, 'warning', true, true, Logger::API);        }
         $monolog->pushHandler($slackHandler);
+        Log::info('App Accessed');
     }
 
     /**
