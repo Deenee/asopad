@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use  Monolog;
 use Monolog\Handler\SlackWebhookHandler;
 use Log;
+use Monolog\Logger;
 
 class AppServiceProvider extends ServiceProvider
 {
