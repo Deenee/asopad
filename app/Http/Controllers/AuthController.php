@@ -19,7 +19,6 @@ class AuthController extends Controller
 */
     public function __construct()
     {
-        Log::info('Authentication Started ..');
         $this->middleware('auth:api', ['only'=>['user']]);
         $this->middleware('email.verified', ['only'=>['user']]);
     }
@@ -36,7 +35,6 @@ class AuthController extends Controller
 
     public function simpleRegistration()
     {
-        Log::info('Simple Registration Started ..');
         $validator = Validator::make(request()->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
