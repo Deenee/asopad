@@ -24,7 +24,6 @@ class AppServiceProvider extends ServiceProvider
         } else {
             $slackHandler = new SlackWebhookHandler('https://hooks.slack.com/services/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', '#paddylogs', 'Paddy Logs', false, 'warning', true, true, Logger::API);        }
         $monolog->pushHandler($slackHandler);
-        Log::info('App Accessed');
     }
 
     /**

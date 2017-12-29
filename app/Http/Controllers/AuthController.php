@@ -6,9 +6,9 @@ use App\Http\Controllers\Traits\ReviewerTrait;
 use App\Http\Controllers\Traits\ResearcherTrait;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Validator;
 use App\Notifications\VerifyEmailNotification;
+use Log;
 
 class AuthController extends Controller
 {
@@ -19,6 +19,7 @@ class AuthController extends Controller
 */
     public function __construct()
     {
+        Log::info('Authentication Started ..');
         $this->middleware('auth:api', ['only'=>['user']]);
         $this->middleware('email.verified', ['only'=>['user']]);
     }
@@ -35,6 +36,7 @@ class AuthController extends Controller
 
     public function simpleRegistration()
     {
+        Log::info('Simple Registration Started ..');
         $validator = Validator::make(request()->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
