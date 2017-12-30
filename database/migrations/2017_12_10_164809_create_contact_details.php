@@ -14,7 +14,7 @@ class CreateContactDetails extends Migration
      */
     public function up()
     {
-        Schema::create('contact_details', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->integer('user_id')->unsigned()->index();
             $table->string('contact');
             $table->enum('type', ['phone_number', 'address', 'skype']);

@@ -17,3 +17,6 @@ Route::get('/', function () {
 
 Route::get('auth/{provider}', 'SocialAuthController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'SocialAuthController@handleProviderCallback');
+// Auth::routes();
+
+Route::get('/clients', 'AuthController@clients');
