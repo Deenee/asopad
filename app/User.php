@@ -7,10 +7,11 @@ use App\Http\Controllers\Traits\ReviewerTrait;
 use App\Http\Controllers\Traits\ResearcherTrait;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
-    use ReviewerTrait, ResearcherTrait, HasApiTokens, Notifiable;
+    use ReviewerTrait, ResearcherTrait, HasApiTokens, Notifiable, LaratrustUserTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -29,4 +30,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'provider', 'provider_id'
     ];
+
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class);
+    }
 }

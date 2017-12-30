@@ -71,13 +71,9 @@ class AuthController extends Controller
     }
 
     // Call this to get the currently authenticated user, you need to pass an access_token from passport.
-    public function user()
+
+    public function clients()
     {
-        return \Auth::user();
-        return response()->json([
-            'responseMessage' => 'Login Successful.',
-            'responseCode' => '200',
-            'data' => [request()->user()]
-        ]);
+        return view('auth');
     }
 }

@@ -17,16 +17,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return [[$request->user()]];
 });
 
-Route::group(['prefix'=>'v1'], function(){
-	Route::group(['prefix'=>'register'], function(){
+Route::group(['prefix'=>'v1'], function()
+{
+	Route::group(['prefix'=>'auth'], function(){
 		// Route::post('/{user_type}', 'AuthController@register');
-	Route::post('/', 'AuthController@simpleRegistration');
-	});
-	
-	Route::get('user', 'AuthController@user');
+		Route::post('register', 'AuthController@simpleRegistration');
+		Route::group(['prefix' => 'email'], function () {
+			Route::post('send', 'EmailController@resendVerificationEmail');
+			Route::post('confirm', 'EmailController@verifyEmail');
+			});
+		});
 
-	Route::group(['prefix' => 'email/verification'], function () {
-	Route::post('send', 'EmailController@resendVerificationEmail');
-	Route::post('confirm', 'EmailController@verifyEmail');	
+	Route::group(['prefix' => 'profile'], function () {
+		Route::get('user', 'UserProfileController@user');
 	});
+
+	
+
+	
 });
