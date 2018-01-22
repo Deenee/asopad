@@ -44,9 +44,8 @@ class VerifyEmailNotification extends Notification
         return (new MailMessage)
                     ->subject('Email Verification.')
                     ->greeting('Hello '.$this->user->first_name . ',')
-                    ->line('Thank you for signing up. Please verfy your email address with the 6(six) digit code.
-                            ' . $this->user->email_token . '
-                            Thank you for using our application!'
+                    ->line('Thank you for signing up. Please click on the button below to verify your account.')
+                    ->action('Verify Account', url('/auth/email/verify/'.$this->user->email_token)
                     );
     }
 

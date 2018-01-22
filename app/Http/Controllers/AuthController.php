@@ -57,7 +57,7 @@ class AuthController extends Controller
             'email'=> request()->email,
             'phone_number'=> request()->phone_number,
             'password'=> bcrypt(request()->password),
-            'email_token'=> rand(100000, 999999),
+            'email_token'=> str_random(50),
             'type' => request()->type ?? 'researcher'
             ]);
 

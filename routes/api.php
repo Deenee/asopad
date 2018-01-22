@@ -24,7 +24,7 @@ Route::group(['prefix'=>'v1'], function()
 		Route::post('register', 'AuthController@simpleRegistration');
 		Route::group(['prefix' => 'email'], function () {
 			Route::post('send', 'EmailController@resendVerificationEmail');
-			Route::post('confirm', 'EmailController@verifyEmail');
+			Route::get('verify/{email_token}', 'EmailController@verifyEmail');
 			});
 		});
 
