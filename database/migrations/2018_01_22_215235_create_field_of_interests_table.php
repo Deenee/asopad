@@ -4,22 +4,20 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContactDetails extends Migration
+class CreateFieldOfInterestsTable extends Migration
 {
     /**
      * Run the migrations.
-     *This migration holds all the possible contact details of the user.
-     The type fields determines the type of contact. good idea?
+     *
      * @return void
      */
     public function up()
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('field_of_interests', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->string('contact');
-            $table->enum('type', ['phone_number', 'email', 'skype']);
+            $table->string('name');
             $table->timestamps();
-            $table->primary(['user_id', 'contact']);
         });
     }
 
@@ -30,6 +28,6 @@ class CreateContactDetails extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contact_details');
+        Schema::dropIfExists('field_of_interests');
     }
 }
