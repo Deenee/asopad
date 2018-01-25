@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Notifications\VerifyEmailNotification;
 use Log;
+use DB;
 
 class AuthController extends Controller
 {
@@ -35,6 +36,7 @@ class AuthController extends Controller
 
     public function simpleRegistration()
     {
+        return DB::transaction(function(){
         $validator = Validator::make(request()->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -68,6 +70,7 @@ class AuthController extends Controller
             'responseCode'=>'201',
             'data'=>[]
             ]);
+        });
     }
 
     // Call this to get the currently authenticated user, you need to pass an access_token from passport.

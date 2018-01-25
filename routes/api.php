@@ -29,10 +29,10 @@ Route::group(['prefix'=>'v1'], function()
 		});
 	});
 
-	Route::group(['prefix' => 'profile'], function () {
+	// Route::group(['prefix' => 'profile'], function () {
 		Route::get('user', 'UserProfileController@user');
-		Route::put('user/{$id}', 'UserProfileController@update');
-	});
+		Route::put('user/{id}', 'UserProfileController@update');
+	// });
 
 	Route::get('researches', 'ResearchController@index');
 	Route::post('researches', 'ResearchController@store');

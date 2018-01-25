@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\ResponseFormat;
 use Log;
+use DB;
 
 class UserProfileController extends Controller
 {
@@ -35,7 +36,7 @@ class UserProfileController extends Controller
             
             try{
             
-            $user = request()->user()->update($information);
+            request()->user()->update($information);
 
             }catch(\Throwable $e){
 
@@ -47,7 +48,7 @@ class UserProfileController extends Controller
             }
 
         DB::commit();    
-        return $this->response->success($user);
+        return $this->response->success(request()->user());
         
     }
     public function createAReview()
