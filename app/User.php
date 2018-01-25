@@ -31,6 +31,11 @@ class User extends Authenticatable
         'password', 'remember_token', 'provider', 'provider_id'
     ];
 
+    public function research()
+    {
+        return $this->belongsToMany(Research::class);
+    }
+
     public function contact()
     {
         return $this->belongsTo(Contact::class);

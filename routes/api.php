@@ -21,17 +21,23 @@ Route::group(['prefix'=>'v1'], function()
 {
 	Route::group(['prefix'=>'auth'], function(){
 		// Route::post('/{user_type}', 'AuthController@register');
-		Route::post('register', 'AuthController@simpleRegistration');
-		Route::group(['prefix' => 'email'], function () {
-			Route::post('send', 'EmailController@resendVerificationEmail');
-			Route::get('verify/{email_token}', 'EmailController@verifyEmail');
-			});
+	Route::post('register', 'AuthController@simpleRegistration');
+	
+	Route::group(['prefix' => 'email'], function () {
+		Route::post('send', 'EmailController@resendVerificationEmail');
+		Route::get('verify/{email_token}', 'EmailController@verifyEmail');
 		});
+	});
 
 	Route::group(['prefix' => 'profile'], function () {
 		Route::get('user', 'UserProfileController@user');
 	});
 
+	Route::get('researches', 'ResearchController@index');
+	Route::post('researches', 'ResearchController@store');
+	Route::get('researches/{id}', 'ResearchController@show');
+	// Route::get('researches', 'ResearchController@index');
+	// Route::get('researches', 'ResearchController@index');
 	
 
 	
