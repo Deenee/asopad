@@ -4,17 +4,51 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Log;
+
 class UserProfileController extends Controller
 {
+    public $response;
+
     public function __construct()
     {
         $this->middleware('auth:api');
+        $response = new ResponseFormat;
+        $this->response = $response;
     }
     
     public function user()
     {
         $user = request()->user()->load('research');
         return $this->response->success($user);
+    }
+
+    /**
+     * Update User information after sign up or login.
+     */
+    public function update($id)
+    {
+        // Not using the query parameter $id but it should be there for now.
+        DB::beginTransaction();
+
+            $information = request()->only(['field_of_study', 'phone_number', 'current_location', 'institution_id', 'department_id' ]);
+            
+            try{
+            
+            $user = request()->user()->update($information);
+
+            }catch(\Throwable $e){
+
+            DB::rollBack();
+
+            Log::info('User Update Failed.', ['Details'=> $e->getMessage()]);
+            
+            return $this->response->error([], 'User Update Failed.', '51');
+            }
+
+        DB::commit();    
+        return $this->response->success($user);
+        
     }
     public function createAReview()
     {

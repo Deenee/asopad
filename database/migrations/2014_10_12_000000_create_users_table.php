@@ -25,10 +25,10 @@ class CreateUsersTable extends Migration
             $table->string('field_of_study')->nullable();
             $table->integer('institution_id')->nullable();
             $table->integer('department_id')->nullable();
-            $table->string('provider')->default('Paddy');
+            $table->string('provider')->nullable(); // Write a validation check if a provider and provider id are null, password is required
             $table->string('current_location')->nullable();
             $table->enum('type',['researcher', 'reviewer', 'mentor']);
-            $table->string('provider_id')->default(0);
+            $table->string('provider_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
