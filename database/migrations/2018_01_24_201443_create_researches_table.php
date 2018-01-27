@@ -21,8 +21,8 @@ class CreateResearchesTable extends Migration
         });
 
         Schema::create('research_user', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned()->index();
             $table->integer('research_id')->unsigned()->index();
+            $table->integer('user_id')->unsigned()->index(); 
             $table->primary(['user_id', 'research_id']);
             $table->timestamps();
         });

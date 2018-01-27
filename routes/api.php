@@ -44,7 +44,8 @@ Route::group(['prefix'=>'v1'], function()
 
 	// Research Management
 	// Assign a user with role: mentor or reviewer, to a research
-	Route::post('research/manage/user', 'ResearchController@addUserToResearch');
+	Route::post('research/manage/user', 'ResearchManagementController@addUserToResearch');
+	Route::delete('research/manage/user/{id}', 'ResearchManagementController@removeUserFromResearch');
 
 	// Pay cost of assigning a user to your research.
 	// Calculate bill.
