@@ -48,7 +48,7 @@ class ResearchController extends Controller
         ]);
         if($validator->fails())
         {
-            return $this->response->error($validator->errors(), 'Validation failed!', 40);
+            return $this->response->error($validator->errors(), 'Validation failed!', '40');
         }
        $research = Research::create([
             'title'=>request()->title,
@@ -71,6 +71,25 @@ class ResearchController extends Controller
             return $this->response->notFound();
         }
         return $this->response->success($research, 'Success, research found.');
+    }
+
+    public function update($id)
+    {
+        $details = request()->only(['title', 'description']);
+        $validator = Validator::make($details, [
+            'title' => 'required_without:description| min:3',
+            'description' => 'required_without:title| min:15',
+        ]);
+        if ($validator->fails()) {
+            return $this->response->error($validator->errors(), 'Validation failed!', '400');
+        }
+
+        $research = Research::find($id);
+        if(!$research){
+            return $this->response->notFound();
+        }
+        $research->update($details);
+        return $this->response->success($research);
     }
 
 }
