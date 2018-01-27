@@ -33,7 +33,7 @@ class User extends Authenticatable
 
     public function research()
     {
-        return $this->belongsToMany(Research::class);
+        return $this->belongsToMany(Research::class)->withTimestamps();
     }
 
     public function contact()
