@@ -13,7 +13,7 @@ class EmailController extends Controller
     // ------
     //  Request from user's email address hits this and verifies the email.
     //
-    public function verifyEmail()
+    public function verifyEmailWhenUserClicksVerificationButton()
     {
         $emailToken = request()->email_token;
         $user = User::where('email_token', $emailToken)->first();
