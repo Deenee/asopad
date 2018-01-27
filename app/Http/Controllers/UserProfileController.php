@@ -17,7 +17,10 @@ class UserProfileController extends Controller
         $response = new ResponseFormat;
         $this->response = $response;
     }
-    
+
+    /**
+     * Return the user and the user's researches created.
+     */
     public function user()
     {
         $user = request()->user()->load('research');
@@ -33,17 +36,13 @@ class UserProfileController extends Controller
         DB::beginTransaction();
 
             $information = request()->only(['field_of_study', 'phone_number', 'current_location', 'institution_id', 'department_id' ]);
-            
             try{
-            
             request()->user()->update($information);
-
             }catch(\Throwable $e){
 
             DB::rollBack();
 
             Log::info('User Update Failed.', ['Details'=> $e->getMessage()]);
-            
             return $this->response->error([], 'User Update Failed.', '51');
             }
 

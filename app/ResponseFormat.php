@@ -24,6 +24,11 @@ class ResponseFormat
         return $this->response( $data, $message, $code);
     }
 
+    public function notFound($data = [], $message = 'Resource Was not found.', $code = '404')
+    {
+        return $this->response($data, $message, $code);
+    }
+
     // All helper response methods using this.
     public function response($data =[], $message, $code )
     {
