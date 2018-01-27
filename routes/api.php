@@ -21,7 +21,7 @@ Route::group(['prefix'=>'v1'], function()
 {
 	Route::group(['prefix'=>'auth'], function(){
 		// Route::post('/{user_type}', 'AuthController@register');
-	Route::post('register', 'AuthController@simpleRegistration');
+	Route::post('register', 'AuthController@register');
 	
 	Route::group(['prefix' => 'email'], function () {
 		Route::post('send', 'EmailController@resendVerificationEmail');
@@ -44,7 +44,7 @@ Route::group(['prefix'=>'v1'], function()
 
 	// Research Management
 	// Assign a user with role: mentor or reviewer, to a research
-	Route::post('researches/{id}/manage', 'ResearchController@index');
+	Route::post('research/manage/user', 'ResearchController@addUserToResearch');
 
 	// Pay cost of assigning a user to your research.
 	// Calculate bill.

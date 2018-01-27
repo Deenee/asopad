@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Traits\ReviewerTrait;
-use App\Http\Controllers\Traits\ResearcherTrait;
 use App\User;
 use Illuminate\Http\Request;
 use Validator;
@@ -20,23 +18,10 @@ class AuthController extends Controller
 */
     public function __construct()
     {
-        $this->middleware('auth:api', ['only'=>['user']]);
         $this->middleware('email.verified', ['only'=>['user']]);
     }
     public function register()
     {
-        //place traits in user model later .
-        if(request()->user_type == 'reviewer'){
-            return ReviewerTrait::registerReviewer();
-        }
-        if (request()->user_type == 'researcher') {
-            return ResearcherTrait::registerResearcher();
-        }
-    }
-
-    public function simpleRegistration()
-    {
-        return DB::transaction(function(){
         $validator = Validator::make(request()->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -53,6 +38,7 @@ class AuthController extends Controller
                 'data'=>$validator->errors()
                 ]);
         }
+        return DB::transaction(function () {
         $user = User::create([
             'first_name'=>request()->first_name,
             'last_name'=> request()->last_name,
@@ -62,8 +48,8 @@ class AuthController extends Controller
             'email_token'=> str_random(50),
             'type' => request()->type ?? 'researcher'
             ]);
-
-        $user->notify(new VerifyEmailNotification($user));
+        $user->attachRole('researcher');
+        @$user->notify(new VerifyEmailNotification($user));
 
         return response()->json([
             'responseMessage'=> 'Registration Successful. An email has been sent to the email provided. Kindly verify the account.',

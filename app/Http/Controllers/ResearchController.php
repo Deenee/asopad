@@ -120,7 +120,8 @@ class ResearchController extends Controller
             return $this->response->notFound();
         }
         return DB::statement(function(){
-            $research->delete();// Instead of deleting it straight away, deactivvate it first and delete after a couple hours. Make the action reversible.
+            $research->delete();// Instead of deleting it straight away, deactivate it first and delete after a couple hours. Make the action reversible.
+            
             request()->user()->research()->detach($research->id);
             return $this->response->success([], 'Resource Deleted.');
         });
