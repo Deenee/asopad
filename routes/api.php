@@ -25,7 +25,7 @@ Route::group(['prefix'=>'v1'], function()
 	
 	Route::group(['prefix' => 'email'], function () {
 		Route::post('send', 'EmailController@resendVerificationEmail');
-		// Route::get('verify/{email_token}', 'EmailController@verifyEmailWhenUserClicksVerificationButton');
+		Route::get('verify/{email_token}', 'EmailController@verifyEmailWhenUserClicksVerificationButton');
 		});
 	});
 
