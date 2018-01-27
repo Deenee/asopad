@@ -73,6 +73,13 @@ class ResearchController extends Controller
         return $this->response->success($research, 'Success, research found.');
     }
 
+    /**
+     *  Update a Specified research resource.
+     *  
+     *  @param id
+     *  @return research
+     *  @method @PUT
+     */
     public function update($id)
     {
         $details = request()->only(['title', 'description']);
@@ -91,5 +98,23 @@ class ResearchController extends Controller
         $research->update($details);
         return $this->response->success($research);
     }
+
+    /**
+     *  Delete a Specified research resource.
+     *  
+     *  @param id
+     *  @return []
+     *  @method @DELETE
+     */
+    public function destroy($id)
+    {
+        $research = Research::find($id);
+        if (!$research) {
+            return $this->response->notFound();
+        }
+        $research->delete();// Instead of deleting it straight away, deactivvate it first and delete after a couple hours. Make the action reversible.
+        return $this->response->success([], 'Resource Deleted.');
+    }
+
 
 }
