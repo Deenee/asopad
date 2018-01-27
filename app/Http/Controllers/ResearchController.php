@@ -12,7 +12,6 @@ class ResearchController extends Controller
 {
     public $response;
     
-    
     public function __construct()
     {   
         $this->middleware('auth:api');
@@ -20,6 +19,13 @@ class ResearchController extends Controller
         $this->response = $response;
     }
 
+    /**
+     *  
+     *  
+     *  @param @header
+     *  @return user,UserResearch
+     *  @method @GET
+     */
     public function index()
     {
         // eager load user with user's researches / papers 
@@ -27,6 +33,13 @@ class ResearchController extends Controller
         return $this->response->success($user);
     }
 
+    /**
+     *  Create a new research. Think of a research as a tile or
+     *  card that holds all the information of a research(title, files(docs), description, owner, reviewer, mentor, amount charged)
+     *  @param title,description
+     *  @return research
+     *  @method @POST
+     */
     public function store ()
     {
         $validator = Validator::make(request()->all(), [
@@ -42,6 +55,22 @@ class ResearchController extends Controller
             'description'=> request()->description
             ]);
             return $this->response->success($research);
+    }
+
+    /**
+     *  Return a Specified research resource.
+     *  
+     *  @param id
+     *  @return research
+     *  @method @GET
+     */
+    public function show($id)
+    {
+        $research = Research::find($id);
+        if(!$research){
+            return $this->response->notFound();
+        }
+        return $this->response->success($research, 'Success, research found.');
     }
 
 }
