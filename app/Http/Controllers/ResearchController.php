@@ -7,6 +7,7 @@ use App\ResponseFormat;
 use App\User;
 use Validator;
 use App\Research;
+use DB;
 
 class ResearchController extends Controller
 {
@@ -36,7 +37,9 @@ class ResearchController extends Controller
     /**
      *  Create a new research. Think of a research as a tile or
      *  card that holds all the information of a research(title, files(docs), description, owner, reviewer, mentor, amount charged)
-     *  @param title,description
+     *  
+     * When user creates a research, attach user id field to research field(pivot)
+     * @param title,description
      *  @return research
      *  @method @POST
      */
@@ -50,11 +53,15 @@ class ResearchController extends Controller
         {
             return $this->response->error($validator->errors(), 'Validation failed!', '40');
         }
-       $research = Research::create([
-            'title'=>request()->title,
-            'description'=> request()->description
-            ]);
-            return $this->response->success($research);
+        return DB::transaction(function(){
+        $research = Research::create([
+                'title'=>request()->title,
+                'description'=> request()->description
+                ]);
+                request()->user()->research()->attach($research->id);
+                return $this->response->success($research);
+    });
+       
     }
 
     /**
@@ -112,8 +119,12 @@ class ResearchController extends Controller
         if (!$research) {
             return $this->response->notFound();
         }
-        $research->delete();// Instead of deleting it straight away, deactivvate it first and delete after a couple hours. Make the action reversible.
-        return $this->response->success([], 'Resource Deleted.');
+        return DB::statement(function(){
+            $research->delete();// Instead of deleting it straight away, deactivvate it first and delete after a couple hours. Make the action reversible.
+            request()->user()->research()->detach($research->id);
+            return $this->response->success([], 'Resource Deleted.');
+        });
+       
     }
 
 

@@ -34,12 +34,22 @@ Route::group(['prefix'=>'v1'], function()
 		Route::put('user/{id}', 'UserProfileController@update');
 	// });
 
+
+	// Research Crud
 	Route::get('researches', 'ResearchController@index');
 	Route::post('researches', 'ResearchController@store');
 	Route::get('researches/{id}', 'ResearchController@show');
 	Route::put('researches/{id}', 'ResearchController@update');
 	Route::delete('researches/{id}', 'ResearchController@destroy');
-	// Route::get('researches', 'ResearchController@index');
+
+	// Research Management
+	// Assign a user with role: mentor or reviewer, to a research
+	Route::post('researches/{id}/manage', 'ResearchController@index');
+
+	// Pay cost of assigning a user to your research.
+	// Calculate bill.
+	// Remove a user from research.
+	// Pay reearch cost.
 	
 
 	
