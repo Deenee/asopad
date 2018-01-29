@@ -16,6 +16,7 @@ class CreateResearchesTable extends Migration
         Schema::create('researches', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->string('field_of_research')->default('*');
             $table->text('description');
             $table->timestamps();
         });
@@ -23,6 +24,7 @@ class CreateResearchesTable extends Migration
         Schema::create('research_user', function (Blueprint $table) {
             $table->integer('research_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index(); 
+            $table->enum('owner', ['guest', 'owner']); 
             $table->primary(['user_id', 'research_id']);
             $table->timestamps();
         });

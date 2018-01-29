@@ -47,7 +47,7 @@ class ResearchController extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'title'=> 'required | min:3',
-            'description'=> 'required | min:15'
+            'description'=> 'required | min:15',
         ]);
         if($validator->fails())
         {
@@ -55,11 +55,11 @@ class ResearchController extends Controller
         }
         return DB::transaction(function(){
         $research = Research::create([
-                'title'=>request()->title,
-                'description'=> request()->description
-                ]);
-                request()->user()->research()->attach($research->id);
-                return $this->response->success($research);
+            'title'=>request()->title,
+            'description'=> request()->description,
+            ]);
+            request()->user()->research()->attach($research->id, ['owner'=> 'owner']);
+            return $this->response->success($research);
     });
        
     }
@@ -91,8 +91,9 @@ class ResearchController extends Controller
     {
         $details = request()->only(['title', 'description']);
         $validator = Validator::make($details, [
-            'title' => 'required_without:description| min:3',
-            'description' => 'required_without:title| min:15',
+            'title' => 'required_without_all:description,field| min:3',
+            'description' => 'required_without_all:title,field| min:15',
+            'field' => 'required_without_all:description,title',
         ]);
         if ($validator->fails()) {
             return $this->response->error($validator->errors(), 'Validation failed!', '400');
