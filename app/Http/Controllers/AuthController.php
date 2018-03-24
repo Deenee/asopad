@@ -11,7 +11,6 @@ use DB;
 
 class AuthController extends Controller
 {
-    // use ReviewerTrait, ResearcherTrait;
 
 /*
 *user type can be researcher/ reviewer

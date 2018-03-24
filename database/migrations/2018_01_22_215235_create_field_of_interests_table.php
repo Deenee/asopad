@@ -13,6 +13,7 @@ class CreateFieldOfInterestsTable extends Migration
      */
     public function up()
     {
+        // Would mostly be used by reviewers
         Schema::create('field_of_interests', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();

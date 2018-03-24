@@ -15,7 +15,7 @@ class ResearchController extends Controller
     
     public function __construct()
     {   
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
         $response = new ResponseFormat;
         $this->response = $response;
     }
@@ -30,7 +30,10 @@ class ResearchController extends Controller
     public function index()
     {
         // eager load user with user's researches / papers 
-        $user = request()->user()->load('research');
+        $user = optional(request()->user())->load('research');
+        if (!$user) {
+            return $this->response->notFound();
+        }
         return $this->response->success($user);
     }
 
@@ -93,7 +96,7 @@ class ResearchController extends Controller
         $validator = Validator::make($details, [
             'title' => 'required_without_all:description,field| min:3',
             'description' => 'required_without_all:title,field| min:15',
-            'field' => 'required_without_all:description,title',
+            'field_id' => 'required_without_all:description,title',
         ]);
         if ($validator->fails()) {
             return $this->response->error($validator->errors(), 'Validation failed!', '400');

@@ -9,8 +9,9 @@ namespace App;
 |
 | A class to hold all the application's responses.
 |
+|
  */
-
+// change from class to trait later
 
 class ResponseFormat
 {
@@ -24,7 +25,7 @@ class ResponseFormat
         return $this->response( $data, $message, $code);
     }
 
-    public function notFound($data = [], $message = 'Resource Was not found.', $code = '404')
+    public function notFound($data = [], $message = 'Resource not found.', $code = '404')
     {
         return $this->response($data, $message, $code);
     }
